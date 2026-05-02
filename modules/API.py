@@ -1,9 +1,11 @@
-import requests
 import json
 import time
-import os
+import logging
+import requests
 from .utils import console
 from rich.progress import Progress
+
+logger = logging.getLogger(__name__)
 
 class API:
     def __init__(self):

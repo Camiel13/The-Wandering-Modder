@@ -1,7 +1,10 @@
-import json
 import os
 import re
+import json
+import logging
 from .utils import console
+
+logger = logging.getLogger(__name__)
 
 class Storage:
     def __init__(self, storage_file):
@@ -17,13 +20,15 @@ class Storage:
 
         for item in items:
             project = {
-                "title": item["title"],
-                "slug": item["slug"],
-                "author": item["author"],
-                "description": item["description"],
-                "downloads": item["downloads"],
-                "categories": item["categories"],
-                "versions": [v for v in item["versions"] if stable_version.match(v)]
+                item['slug']: {
+                    "title": item["title"],
+                    "slug": item["slug"],
+                    "author": item["author"],
+                    "description": item["description"],
+                    "downloads": item["downloads"],
+                    "categories": item["categories"],
+                    "versions": [v for v in item["versions"] if stable_version.match(v)]
+                }
             }
             all_mods.append(project)
 

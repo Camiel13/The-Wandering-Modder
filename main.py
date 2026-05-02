@@ -1,12 +1,13 @@
-from rich.table import Table
-from rich import box
-from the_wandering_modder import TheWanderingModder
-import pyfiglet
 import os
 import sys
 import time
 import logging
+import pyfiglet
+from rich import box
+from rich.table import Table
 from modules.utils import console
+from the_wandering_modder import TheWanderingModder
+
 
 with console.status("[bold blue]Aan het opstarten...[/bold blue]"):
     # Define the bot controlling object.
@@ -51,7 +52,12 @@ try:
             console.print(table)
         elif command == "mod init" or command == "datapack init" or command == "resourcepack init" or command == "shader init" or command == "plugin init":
             project_type = command.split(" ")[0]
-            app.sync_projects(project_type=project_type)
+            app.init_projects(project_type=project_type)
+        elif command == "mod query" or command == "datapack query" or command == "resourcepack query" or command == "shader query" or command == "plugin query":
+            project_type = command.split(" ")[0]
+            prompt = console.input("What kind of project are you looking for?(be specific): ")
+            result_amount = console.input("How many projects do you want?: ")
+            app.query(projects_type=project_type, prompt=prompt, result_amount=int(result_amount))
         elif command == "clear":
             os.system("cls" if os.name == "nt" else "clear")
             print(pyfiglet.figlet_format("The Wandering Trader", font="5lineoblique"))
