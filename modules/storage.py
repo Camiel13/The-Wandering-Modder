@@ -16,11 +16,10 @@ class Storage:
 
     def store_projects(self, items):
         stable_version = re.compile(r"^\d+\.\d+(\.\d+)?$")
-        all_mods = []
+        all_mods = {}
 
         for item in items:
-            project = {
-                item['slug']: {
+            all_mods[item['slug']] = {
                     "title": item["title"],
                     "slug": item["slug"],
                     "author": item["author"],
@@ -28,9 +27,7 @@ class Storage:
                     "downloads": item["downloads"],
                     "categories": item["categories"],
                     "versions": [v for v in item["versions"] if stable_version.match(v)]
-                }
             }
-            all_mods.append(project)
-
+            
         with open(self.storage_file, 'w') as f:
             json.dump(all_mods, f, indent=4)

@@ -33,7 +33,7 @@ class ChromaDB:
             categories_list = project.get("categories", []) or ["Unknown"]
             categories_string = ", ".join(categories_list)
             
-            full_description = f"{project.get('description')} || Categories: {categories_string}"
+            full_description = full_description = f"project.get('title'). {project.get('description')}. {categories_string}"
             descriptions.append(full_description)
 
             versions_list = project.get('versions') or ["Unknown"]
