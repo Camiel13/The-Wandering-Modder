@@ -17,7 +17,7 @@ class API:
 
     def get_projects(self, type):
         offset = 0
-        limit = 300
+        limit = 100
         total_projects = 1      # Will get changed on the first request, is 1 so the while loop starts
         facets = json.dumps([[f"project_type:{type}"]])
         all_projects = []
@@ -48,9 +48,10 @@ class API:
                     progress.advance(task, len(hits))
 
                     all_projects.extend(hits)
-                    time.sleep(0.5)
+                    time.sleep(0.25) # rate limit is 300 requests per minute. A 0,25s delay makes 400 requests per minute.
                 else:
                     print("Something went wrong while getting the mods.")
+                    logger.error(f"Failed to fetch project: {response.status_code}")
                     break
                     
             return all_projects
