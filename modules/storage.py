@@ -31,3 +31,12 @@ class Storage:
             
         with open(self.storage_file, 'w') as f:
             json.dump(all_mods, f, indent=4)
+
+    def load_projects(self):
+        if not os.path.exists(self.storage_file):
+            console.print(f"[bold red]No JSON storage file found called {json_storage}[/]")
+            logger.error(f"No JSON storage file found for {json_storage}.")
+            return None
+        
+        with open(self.storage_file, "r") as f:
+            return json.load(f)

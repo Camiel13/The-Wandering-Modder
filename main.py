@@ -1,3 +1,4 @@
+import re
 import os
 import sys
 import time
@@ -12,6 +13,7 @@ from the_wandering_modder import TheWanderingModder
 with console.status("[bold blue]Aan het opstarten...[/bold blue]"):
     # Define the bot controlling object.
     app = TheWanderingModder()
+    COMMAND_REGEX = re.compile(r'^(mod|datapack|resourcepack|shader|plugin)\s+(init|query)$')
 
     # Check for debug mode and initialize the logging.
     os.makedirs("logs", exist_ok=True)
@@ -29,7 +31,8 @@ with console.status("[bold blue]Aan het opstarten...[/bold blue]"):
     )
     logger = logging.getLogger(__name__)
 
-# Started up, print logo.
+# Started up, print logo and clear terminal.            
+os.system("cls" if os.name == "nt" else "clear")
 print(pyfiglet.figlet_format("The Wandering Modder"))
 
 # Start the main loop
@@ -37,30 +40,32 @@ try:
     while True:
         command = input("\n-> ").lower().strip()
 
+        match = COMMAND_REGEX.match(command)
+
         if command == "help":
-            console.print("This tool is meant for finding specefic mods by just describing the functionality. You can see the table for the available commands. You have to replace [project_type] with one of the following project types: mod, datapack, resourcepack, shader or plugin.")
+            console.print("This tool is meant for finding specefic mods by just describing the functionality. You can see the table for the available commands. You have to replace {project_type} with one of the following project types: mod, datapack, resourcepack, shader or plugin.")
 
             table = Table(title="The Wandering Modder Commands", title_style="bold #0096db", border_style="cyan", box=box.ROUNDED)
             table.add_column("Command", style="bold green")
             table.add_column("Explanation", style="white")
 
-            table.add_row("[project_type] init", "Sets up the searching of a specefic project type. [red]!! REQUIRED !![/red]")
+            table.add_row("{project_type} init", "Sets up the searching of a specefic project type. [red]!! REQUIRED !![/red]")
 
             table.add_row("clear", "Clears the terminal.")
             table.add_row("exit/quit", "Shuts down the program.")
 
             console.print(table)
-        elif command == "mod init" or command == "datapack init" or command == "resourcepack init" or command == "shader init" or command == "plugin init":
-            project_type = command.split(" ")[0]
-            app.init_projects(project_type=project_type)
-        elif command == "mod query" or command == "datapack query" or command == "resourcepack query" or command == "shader query" or command == "plugin query":
-            project_type = command.split(" ")[0]
-            prompt = console.input("What kind of project are you looking for?(be specific): ")
-            result_amount = console.input("How many projects do you want?: ")
-            app.query(projects_type=project_type, prompt=prompt, result_amount=int(result_amount))
+        elif match:
+            project_type = match.group(1)
+            action = match.group(2)
+
+            if action == "init":
+                app.init_projects(project_type=project_type)
+            elif action == "query":
+                app.query(project_type=project_type)
         elif command == "clear":
             os.system("cls" if os.name == "nt" else "clear")
-            print(pyfiglet.figlet_format("The Wandering Trader", font="5lineoblique"))
+            print(pyfiglet.figlet_format("The Wandering Modder", font="5lineoblique"))
         elif command == "exit" or command == "quit":
             with console.status("[bold yellow]Shutting down...![/bold yellow]"):
                 logger.info("Shutting down by command...")
