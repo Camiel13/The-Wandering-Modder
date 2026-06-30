@@ -50,6 +50,7 @@ try:
             table.add_column("Explanation", style="white")
 
             table.add_row("{project_type} init", "Sets up the searching of a specefic project type. [red]!! REQUIRED !![/red]")
+            table.add_row("{project_type} query", "Search the built database for specific mods with keywords.")
 
             table.add_row("clear", "Clears the terminal.")
             table.add_row("exit/quit", "Shuts down the program.")
