@@ -34,8 +34,8 @@ class Storage:
 
     def load_projects(self):
         if not os.path.exists(self.storage_file):
-            console.print(f"[bold red]No JSON storage file found called {json_storage}[/]")
-            logger.error(f"No JSON storage file found for {json_storage}.")
+            console.print(f"[bold red]No JSON storage file found called {self.storage_file}[/]")
+            logger.error(f"No JSON storage file found for {self.storage_file}.")
             return None
         
         with open(self.storage_file, "r") as f:

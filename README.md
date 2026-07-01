@@ -33,3 +33,11 @@ You have to replace `{project_type}` with one of the following project types: `m
 | **`help`** | Shows all the commands available.|
 | **`clear`** | Clears the terminal. |
 | **`exit`** / **`quit`** | Shuts down the program. |
+
+## Hardware Acceleration
+You can make the process of building the vector database up to 10-50x faster by using a dedicated Nvidia GPU with the CUDA toolkit. This is done by replacing the normal package with a GPU-supported variant and installing the CUDA toolkit onto your system. **Note that this can only be done when using a Nvidia GPU with the proper installation of the CUDA toolkit and using recent drivers!**
+```bash
+pip uninstall onnxruntime
+pip install onnxruntime-gpu
+```
+

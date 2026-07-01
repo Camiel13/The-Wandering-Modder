@@ -59,7 +59,6 @@ class ChromaDB:
                 "versions": versions_list,
                 "categories": categories_list,
                 "description": project.get("description"),
-                "project_type": project_type
             })
 
             slugs.append(project.get("slug"))

@@ -51,7 +51,7 @@ class TheWanderingModder:
             self.chroma_client.build_database(project_type=project_type)
 
     def query(self, project_type: str):
-        prompt = console.input("What kind of project are you looking for?(be specific): ")
+        prompt = console.input("What kind of project are you looking for?(use keywords, e.g. health, food, cooking): ")
         result_amount = int(console.input("How many projects do you want?: "))
         
         results = self.chroma_client.get_projects(project_type=project_type,
